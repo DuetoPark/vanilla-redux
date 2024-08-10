@@ -4,17 +4,23 @@ const plus = document.querySelector("#plus");
 const minus = document.querySelector("#minus");
 const number = document.querySelector("span");
 
+number.textContent = 0;
+
+const ACTION = Object.freeze({
+  PLUS: "PLUS",
+  MINUS: "MINUS",
+});
+
 // NOTE: reducer
 const countModifier = (count = 0, action) => {
-  if (action.type === "PLUS") {
-    return count + 1;
+  switch (action.type) {
+    case ACTION.PLUS:
+      return count + 1;
+    case ACTION.MINUS:
+      return count - 1;
+    default:
+      return count;
   }
-
-  if (action.type === "MINUS") {
-    return count - 1;
-  }
-
-  return count;
 };
 
 // NOTE: store 생성
@@ -29,11 +35,11 @@ countStore.subscribe(onChange);
 
 // NOTE: 사용자 인터렉션으로 reducer에 메세지 전달
 const handlePlus = () => {
-  countStore.dispatch({ type: "PLUS" });
+  countStore.dispatch({ type: ACTION.PLUS });
 };
 
 const handleMinus = () => {
-  countStore.dispatch({ type: "MINUS" });
+  countStore.dispatch({ type: ACTION.MINUS });
 };
 
 plus?.addEventListener("click", handlePlus);
