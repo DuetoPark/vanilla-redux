@@ -1,16 +1,17 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 
-const Home = ({ toDos }) => {
-  console.log(toDos);
+import { actionCreator } from "../store";
+
+const Home = ({ toDos, addToDo }) => {
   const [text, setText] = useState("");
   const onChange = (e) => {
     setText(e.target.value);
   };
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log(text);
     setText("");
+    addToDo(text); // 🔥 컴포넌트에 Dispatch가 드러나지 않음
   };
 
   return (
@@ -31,4 +32,11 @@ const mapStateToProps = (state) => {
   return { toDos: state };
 };
 
-export default connect(mapStateToProps)(Home);
+// 🔥 모든 Dispatch가 이곳에 집약됨 (store.dispatch와 동일한 동작)
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addToDo: (text) => dispatch(actionCreator.addToDo(text)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

@@ -6,10 +6,10 @@ const TODO_ACTION = Object.freeze({
   DELETE: "DELETE",
 });
 
-export const addToDo = (text) => {
+const addToDo = (text) => {
   return { type: TODO_ACTION.ADD, text };
 };
-export const deleteToDo = (id) => {
+const deleteToDo = (id) => {
   return { type: TODO_ACTION.DELETE, id };
 };
 
@@ -25,5 +25,10 @@ const reducer = (state = [], action) => {
 };
 
 const store = createStore(reducer);
+
+export const actionCreator = {
+  addToDo,
+  deleteToDo,
+};
 
 export default store;
