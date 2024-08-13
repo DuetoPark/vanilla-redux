@@ -12,6 +12,7 @@ const ToDo = ({ text, id, deleteToDo }) => {
   );
 };
 
+// 🔥 모든 Dispatch가 이곳에 집약됨 (store.dispatch와 동일한 동작)
 function mapDispatchToProps(dispatch, ownProps) {
   return {
     deleteToDo: () => dispatch(actionCreator.deleteToDo(ownProps.id)),
