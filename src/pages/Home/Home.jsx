@@ -1,15 +1,12 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 
-// import { actionCreator } from "../../redux-toolkit-store";
-import { init } from "../../redux-toolkit-store";
-
 import { updateLocalStorage } from "./feature/localStorage";
 
 import Form from "./components/Form";
 import ToDo from "./components/ToDo";
 
-const Home = ({ toDos, initToDos }) => {
+const Home = ({ toDos }) => {
   useEffect(() => {
     if (toDos) {
       updateLocalStorage(toDos);
@@ -31,10 +28,4 @@ const mapStateToProps = (state) => {
   return { toDos: state };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    initToDos: (data) => dispatch(init(data)),
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default connect(mapStateToProps)(Home);
