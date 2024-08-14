@@ -1,7 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
-import { actionCreator } from "../../../store";
 import { Link } from "react-router-dom";
+// import { actionCreator } from "../../../store";
+import { actionCreator } from "../../../redux-tookit-store";
 
 const ToDo = ({ text, id, deleteToDo }) => {
   return (

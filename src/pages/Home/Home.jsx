@@ -3,7 +3,8 @@ import { connect } from "react-redux";
 
 import Form from "./components/Form";
 import ToDo from "./components/ToDo";
-import { actionCreator } from "../../store";
+// import { actionCreator } from "../../store";
+import { actionCreator } from "../../redux-tookit-store";
 
 const Home = ({ toDos, initToDos }) => {
   useEffect(() => {

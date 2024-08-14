@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import { actionCreator } from "../../../store";
+// import { actionCreator } from "../../../store";
+import { actionCreator } from "../../../redux-tookit-store";
 
 const Form = ({ addToDo }) => {
   const [text, setText] = useState("");
