@@ -1,8 +1,9 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 
-// import { actionCreator } from "../../store";
-import { actionCreator } from "../../redux-tookit-store";
+// import { actionCreator } from "../../redux-toolkit-store";
+import { init } from "../../redux-toolkit-store";
+
 import { updateLocalStorage } from "./feature/localStorage";
 
 import Form from "./components/Form";
@@ -32,7 +33,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    initToDos: (data) => dispatch(actionCreator.initToDos(data)),
+    initToDos: (data) => dispatch(init(data)),
   };
 };
 

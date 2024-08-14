@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
-// import { actionCreator } from "../../../store";
-import { actionCreator } from "../../../redux-tookit-store";
+// import { actionCreator } from "../../../redux-toolkit-store";
+import { add } from "../../../redux-toolkit-store";
 
 const Form = ({ addToDo }) => {
   const [text, setText] = useState("");
@@ -26,7 +26,7 @@ const Form = ({ addToDo }) => {
 // 🔥 모든 Dispatch가 이곳에 집약됨 (store.dispatch와 동일한 동작)
 const mapDispatchToProps = (dispatch) => {
   return {
-    addToDo: (text) => dispatch(actionCreator.addToDo(text)),
+    addToDo: (text) => dispatch(add(text)),
   };
 };
 

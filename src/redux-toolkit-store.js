@@ -1,5 +1,10 @@
 import { v4 } from "uuid";
-import { configureStore, createAction, createReducer } from "@reduxjs/toolkit";
+import {
+  configureStore,
+  createAction,
+  createReducer,
+  createSlice,
+} from "@reduxjs/toolkit";
 import { getLocalTodos } from "./pages/Home/feature/localStorage";
 
 // NOTE: creatAction
@@ -57,10 +62,30 @@ const reducer = createReducer(initState(), (builder) => {
 //   }
 // };
 
+// NOTE: createSlice
+const toDosSlice = createSlice({
+  name: "toDosReducer",
+  initialState: initState(),
+  reducers: {
+    add: (state, action) => {
+      if (!state) {
+        return [{ text: action.payload, id: v4() }];
+      }
+
+      state.unshift({ text: action.payload, id: v4() });
+    },
+    remove: (state, action) =>
+      state.filter((toDo) => toDo.id !== action.payload),
+    init: (state, action) => [...action.payload],
+  },
+});
+
 // NOTE: configureStore
-const store = configureStore({ reducer });
+const store = configureStore({ reducer: toDosSlice.reducer });
 
 // const store = createStore(reducer);
+
+export const { add, remove, init } = toDosSlice.actions;
 
 export const actionCreator = {
   addToDo,
