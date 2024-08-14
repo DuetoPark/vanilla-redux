@@ -1,22 +1,18 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 
-import Form from "./components/Form";
-import ToDo from "./components/ToDo";
 // import { actionCreator } from "../../store";
 import { actionCreator } from "../../redux-tookit-store";
+import { updateLocalStorage } from "./feature/localStorage";
+
+import Form from "./components/Form";
+import ToDo from "./components/ToDo";
 
 const Home = ({ toDos, initToDos }) => {
   useEffect(() => {
-    const localToDos = getLocalTodos();
-
-    if (localToDos) {
-      initToDos(JSON.parse(localToDos));
+    if (toDos) {
+      updateLocalStorage(toDos);
     }
-  }, [initToDos]);
-
-  useEffect(() => {
-    toDos && toDos.length && updateLocalStorage(toDos);
   }, [toDos]);
 
   return (
@@ -25,23 +21,9 @@ const Home = ({ toDos, initToDos }) => {
 
       <Form />
 
-      <ul>
-        {toDos.map((toDo) => (
-          <ToDo key={toDo.id} {...toDo} />
-        ))}
-      </ul>
+      <ul>{toDos && toDos.map((toDo) => <ToDo key={toDo.id} {...toDo} />)}</ul>
     </div>
   );
-};
-
-const LOCALSTORAGE_TODO = "toDos";
-
-const getLocalTodos = () => {
-  return localStorage.getItem(LOCALSTORAGE_TODO);
-};
-
-const updateLocalStorage = (toDos) => {
-  localStorage.setItem(LOCALSTORAGE_TODO, JSON.stringify(toDos));
 };
 
 const mapStateToProps = (state) => {

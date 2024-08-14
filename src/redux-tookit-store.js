@@ -1,6 +1,7 @@
 import { createStore } from "redux";
 import { v4 } from "uuid";
 import { createAction } from "@reduxjs/toolkit";
+import { getLocalTodos } from "./pages/Home/feature/localStorage";
 
 // NOTE: creatAction
 const addToDo = createAction("ADD");
@@ -23,7 +24,12 @@ const initToDos = createAction("INIT");
 //   return { type: TODO_ACTION.INIT, data };
 // };
 
-const reducer = (state = [], action) => {
+const initState = () => {
+  const localToDos = getLocalTodos();
+  return localToDos ? JSON.parse(localToDos) : null;
+};
+
+const reducer = (state = initState(), action) => {
   switch (action.type) {
     case addToDo.type:
       return [{ id: v4(), text: action.payload }, ...state];
