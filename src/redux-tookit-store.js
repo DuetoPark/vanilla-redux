@@ -1,6 +1,5 @@
-import { createStore } from "redux";
 import { v4 } from "uuid";
-import { createAction } from "@reduxjs/toolkit";
+import { configureStore, createAction, createReducer } from "@reduxjs/toolkit";
 import { getLocalTodos } from "./pages/Home/feature/localStorage";
 
 // NOTE: creatAction
@@ -29,20 +28,39 @@ const initState = () => {
   return localToDos ? JSON.parse(localToDos) : null;
 };
 
-const reducer = (state = initState(), action) => {
-  switch (action.type) {
-    case addToDo.type:
-      return [{ id: v4(), text: action.payload }, ...state];
-    case deleteToDo.type:
-      return state.filter((toDo) => toDo.id !== action.payload);
-    case initToDos.type:
-      return [...action.payload];
-    default:
-      return state;
-  }
-};
+// NOTE: createReducer
+const reducer = createReducer(initState(), (builder) => {
+  builder
+    .addCase(addToDo, (state, action) => {
+      if (!state) {
+        return [{ text: action.payload, id: v4() }];
+      }
 
-const store = createStore(reducer);
+      state.unshift({ text: action.payload, id: v4() });
+    })
+    .addCase(deleteToDo, (state, action) =>
+      state.filter((toDo) => toDo.id !== action.payload)
+    )
+    .addCase(initToDos, (state, action) => [...action.payload]);
+});
+
+// const reducer = (state = initState(), action) => {
+//   switch (action.type) {
+//     case addToDo.type:
+//       return [{ id: v4(), text: action.payload }, ...state];
+//     case deleteToDo.type:
+//       return state.filter((toDo) => toDo.id !== action.payload);
+//     case initToDos.type:
+//       return [...action.payload];
+//     default:
+//       return state;
+//   }
+// };
+
+// NOTE: configureStore
+const store = configureStore({ reducer });
+
+// const store = createStore(reducer);
 
 export const actionCreator = {
   addToDo,
